@@ -4,11 +4,7 @@ import pyautogui as pag
 import toggles as tog
 import movement as mov
 
-TINO = False
 officeTronics = ("GFredInOffice.jpg", "TFredinOffice.jpg", "WBonInOffice.jpg", "WCHicInOffice.png")
-
-def getTINO():
-    return TINO
 
 def leftVent():
     mov.lookLeft()
@@ -70,21 +66,16 @@ def checkLoc(location):
                 pag.mouseUp(button='left')
 
 def TronicIOTest():
-    global TINO
     for i in range(4):
         if(pag.locateOnScreen(officeTronics[i], grayscale=True, confidence=.7)):
-            TINO = True
             return True
         else:
-            TINO = False
             return False
 
-def TronicInOffice():
-    global TINO
+def OfficeCheck():
     if(TronicIOTest):
         tog.toggleMask()
         while(not pag.locateOnScreen("PostAttackFreddyMask.PNG", grayscale=True, confidence=.9)):
             time.sleep(.1)
         time.sleep(1)
-        tog.toggleMask()
-        TINO = False    
+        tog.toggleMask()   
