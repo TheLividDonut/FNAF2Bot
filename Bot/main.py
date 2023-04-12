@@ -46,7 +46,7 @@ def windMB(duration):
 def godStrat():
     tog.toggleCam()
     time.sleep(.1)
-    AC.TronicInOffice()
+    AC.OfficeCheck()
     
 
 
