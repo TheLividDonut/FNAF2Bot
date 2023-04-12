@@ -83,14 +83,8 @@ def godStrat():
     global TINO
     toggleCam()
     time.sleep(.1)
-    toggleMask()
-    if(not TINO):
-        toggleMask()
-    else:
-        while(TINO):
-            time.sleep(.1)
-        toggleMask()
-
+    TronicInOffice()
+    
 #Location = 
 # 1 = RV 
 # 2 = Hall 
@@ -128,9 +122,10 @@ def TronicInOffice():
     for i in range(4):
         if(pag.locateOnScreen(officeTronics[i], grayscale=True, confidence=.7)):
             toggleMask()
-    TINO = True
-    while(not pag.locateOnScreen("PostAttackFreddyMask.PNG", grayscale=True, confidence=.9)):
-        time.sleep(.1)
-    time.sleep(1)
-    toggleMask()
-    TINO = False
+            TINO = True
+    if(TINO):
+        while(not pag.locateOnScreen("PostAttackFreddyMask.PNG", grayscale=True, confidence=.9)):
+            time.sleep(.1)
+        time.sleep(1)
+        toggleMask()
+        TINO = False
