@@ -4,7 +4,7 @@ import pyautogui as pag
 import toggles as tog
 import movement as mov
 
-officeTronics = ("GFredInOffice.jpg", "TFredinOffice.jpg", "WBonInOffice.jpg", "WCHicInOffice.png")
+officeTronics = ("GFredInOffice.png", "TFredinOffice.png", "WBonInOffice.png", "WCHicInOffice.png")
 
 def leftVent():
     mov.lookLeft()
@@ -36,14 +36,17 @@ def hallWay():
 def checkLoc(location):
     match(location):
         case(1):
-            if(pag.locateOnScreen("TBonnie.png", grayscale=True, confidence=.7)):
+            Tbonnie = pag.locateOnScreen("TBonnie.png", grayscale=True, confidence=.7) is not None
+            Mangle = pag.locateOnScreen("Mangle.png", grayscale=True, confidence=.7) is not None
+            if(Tbonnie):
                 pag.mouseUp(button='left')
                 tog.toggleMask()
                 time.sleep(1)
-                while(pag.locateOnScreen("TBMask.jpg", grayscale=True, confidence=.6)):
+                endAttack = pag.locateOnScreen("TBMask.png", grayscale=True, confidence=.6) is not None
+                while(not endAttack):
                     time.sleep(.5)
                 tog.toggleMask()
-            elif(pag.locateOnScreen("Mangle.png", grayscale=True, confidence=.7)):
+            elif(Mangle):
                 pag.mouseUp(button='left')
                 tog.toggleMask()
                 time.sleep(5)
@@ -52,12 +55,18 @@ def checkLoc(location):
                 pag.mouseUp(button='left')
 
         case(2):
-            if(pag.locateOnScreen("JFoxy.png", grayscale=True, confidence=.7) or pag.locateOnScreen("MFoxy.png", grayscale=True, confidence=.7) or pag.locateOnScreen("BFoxy.png", grayscale=True, confidence=.7)):
+            JustFoxy = pag.locateOnScreen("JFoxy.png", grayscale=True, confidence=.7) is not None
+            MangleFoxy = pag.locateOnScreen("MFoxy.png", grayscale=True, confidence=.7) is not None
+            BonnieFoxy = pag.locateOnScreen("BFoxy.png", grayscale=True, confidence=.7) is not None
+            FoxyCheck = (JustFoxy or MangleFoxy or BonnieFoxy)
+            if(FoxyCheck):
                 for i in range(6):
                     tog.shineLight()
                     time.sleep(.3)
         case(3):
-            if (pag.locateOnScreen("TChica.png", grayscale=True, confidence=.7) or pag.locateOnScreen("BB.png", grayscale=True, confidence=.7)):
+            TChica = pag.locateOnScreen("TChica.png", grayscale=True, confidence=.7) is not None
+            BB = pag.locateOnScreen("TChica.png", grayscale=True, confidence=.7) is not None
+            if (TChica or BB):
                 pag.mouseUp(button='left')
                 tog.toggleMask()
                 time.sleep(5)
@@ -67,7 +76,8 @@ def checkLoc(location):
 
 def TronicIOTest():
     for i in range(4):
-        if(pag.locateOnScreen(officeTronics[i], grayscale=True, confidence=.7)):
+        TronicInOffice = pag.locateOnScreen(officeTronics[i], grayscale=True, confidence=.7) is not None
+        if(TronicInOffice):
             return True
         else:
             return False

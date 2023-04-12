@@ -2,7 +2,7 @@ import keyboard
 import time
 import pyautogui as pag
 
-direction = 2
+direction = 3
 #1 = right, 2 = mid, 3 = left
 
 def sRFM():
