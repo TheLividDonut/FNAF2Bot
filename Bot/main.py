@@ -4,10 +4,11 @@ import pyautogui as pag
 import movement as mov
 import toggles as tog
 import animatroicChecks as AC
+import cv2
 
-
-
-
+#Images
+GreyMB= cv2.imread(r"C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\GreyMB.png")
+GreenMB = cv2.imread(r"C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\Music.png")
 
 """
 try:
@@ -38,12 +39,14 @@ def goToCam11():
 #Only useful at the start of the night
 
 def windMB(duration):
-    Winding = pag.locateOnScreen("C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\Music.png",grayscale=True, confidence=.7) is not None
-    NotWinding = pag.locateOnScreen("C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\GreyMB.png",grayscale=True, confidence=.7) is not None
+    Winding = pag.locateOnScreen(GreenMB,grayscale=True, confidence=.5) is not None
+    NotWinding = pag.locateOnScreen(GreyMB,grayscale=True, confidence=.7) is not None
     start = time.time()
     pag.moveTo(268, 371)
     pag.mouseDown(button='left')
-    while(time.time() - start > duration and (Winding or NotWinding)):
+    print(Winding)
+    print(NotWinding)
+    while(time.time() - start < duration):# and (Winding or NotWinding)):
         pag.mouseDown(button='left')
     pag.mouseUp(button="left")
     
@@ -59,7 +62,7 @@ def autoPlay():
     pag.center()
     time.sleep(30)
     mov.lookRight()
-    tog.toggleCam() #Cam Up
+    tog.toggleCam() #Cam Ups
     goToCam11()
     windMB(20)
     godStrat() #Cam Down
@@ -71,7 +74,7 @@ def autoPlay():
        AC.hallWay()
        AC.rightVent()
        tog.toggleCam() #Cam up\
-       windMB(10)
+       windMB(3)
        godStrat()
     
 while not keyboard.is_pressed('g'):
@@ -89,5 +92,6 @@ while not keyboard.is_pressed('g'):
         autoPlay() #Use when hovering the start button
     if keyboard.is_pressed('f'):
         godStrat()
+        
 
 

@@ -6,7 +6,7 @@ Screen_Dimensions = [0, 0, 640, 480]
 
 def toggleCam():
     pag.moveTo(380, 400)
-    pag.moveTo(380, 500, 0.2)
+    pag.moveTo(380, 500, 0.15)
     pag.moveTo(380, 400, 0.1)
     pag.center(Screen_Dimensions)
 
