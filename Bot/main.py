@@ -40,15 +40,13 @@ def goToCam11():
 #Only useful at the start of the night
 
 def returnMB():
-    Winding = pag.locateOnScreen(GreenMB,grayscale=False, confidence=.5) is not None
-    Winding2 = pag.locateOnScreen(GreenMB2,grayscale=False, confidence=.5) is not None
+    Winding = pag.locateOnScreen(GreenMB2,grayscale=False, confidence=.6) is not None
     NotWinding = pag.locateOnScreen(GreyMB,grayscale=False, confidence=.7) is not None
-    print(Winding)
     print(NotWinding)
-    print(Winding2)
+    print(Winding)
 
 def windMB(duration):
-    Winding = pag.locateOnScreen(GreenMB2,grayscale=False, confidence=.3) is not None
+    Winding = pag.locateOnScreen(GreenMB2,grayscale=False, confidence=.5) is not None
     NotWinding = pag.locateOnScreen(GreyMB,grayscale=False, confidence=.7) is not None
     start = time.time()
     pag.moveTo(268, 371)
@@ -63,7 +61,7 @@ def windMB(duration):
 def godStrat():
     tog.toggleCam()
     time.sleep(.1)
-    AC.OfficeCheck() 
+    AC.OfficeCheck()
 
 def autoPlay():
     timeout = 408
@@ -102,4 +100,6 @@ while not keyboard.is_pressed('g'):
         autoPlay() #Use when hovering the start button
     if keyboard.is_pressed('f'):
         godStrat()
+    if keyboard.is_pressed('v'):
+        returnMB()
         
