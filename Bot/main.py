@@ -9,6 +9,7 @@ import cv2
 #Images
 GreyMB= cv2.imread(r"C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\GreyMB.png")
 GreenMB = cv2.imread(r"C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\Music.png")
+GreenMB2 = cv2.imread(r"C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\GreenMB2.png")
 
 """
 try:
@@ -38,15 +39,24 @@ def goToCam11():
     pag.leftClick()
 #Only useful at the start of the night
 
+def returnMB():
+    Winding = pag.locateOnScreen(GreenMB,grayscale=False, confidence=.5) is not None
+    Winding2 = pag.locateOnScreen(GreenMB2,grayscale=False, confidence=.5) is not None
+    NotWinding = pag.locateOnScreen(GreyMB,grayscale=False, confidence=.7) is not None
+    print(Winding)
+    print(NotWinding)
+    print(Winding2)
+
 def windMB(duration):
-    Winding = pag.locateOnScreen(GreenMB,grayscale=True, confidence=.5) is not None
-    NotWinding = pag.locateOnScreen(GreyMB,grayscale=True, confidence=.7) is not None
+    Winding = pag.locateOnScreen(GreenMB2,grayscale=False, confidence=.3) is not None
+    NotWinding = pag.locateOnScreen(GreyMB,grayscale=False, confidence=.7) is not None
     start = time.time()
     pag.moveTo(268, 371)
     pag.mouseDown(button='left')
-    print(Winding)
     print(NotWinding)
-    while(time.time() - start < duration):# and (Winding or NotWinding)):
+    time.sleep(.1)
+    print(Winding)
+    while(time.time() - start < duration and Winding):
         pag.mouseDown(button='left')
     pag.mouseUp(button="left")
     
@@ -93,5 +103,3 @@ while not keyboard.is_pressed('g'):
     if keyboard.is_pressed('f'):
         godStrat()
         
-
-

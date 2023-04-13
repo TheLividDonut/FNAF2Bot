@@ -11,8 +11,6 @@ def sRFM():
     pag.moveTo(320, 240)
 
 def sRFL():
-    pag.moveTo(0, 240)
-    time.sleep(1)
     pag.moveTo(320, 240)
 
 def sLFM():
