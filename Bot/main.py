@@ -8,8 +8,7 @@ import cv2
 
 #Images
 GreyMB= cv2.imread(r"C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\GreyMB.png")
-GreenMB = cv2.imread(r"C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\Music.png")
-GreenMB2 = cv2.imread(r"C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\GreenMB2.png")
+GreenMB = cv2.imread(r"C:\Users\Noah\Desktop\Computer Stuff\Programming\FNAF2 Bot Stuff\GreenMB2.png")
 
 """
 try:
@@ -40,24 +39,31 @@ def goToCam11():
 #Only useful at the start of the night
 
 def returnMB():
-    Winding = pag.locateOnScreen(GreenMB2,grayscale=False, confidence=.6) is not None
-    NotWinding = pag.locateOnScreen(GreyMB,grayscale=False, confidence=.7) is not None
+    Winding = pag.locateOnScreen(GreenMB,grayscale=False, confidence=.6) is not None
+    NotWinding = pag.locateOnScreen(GreyMB,grayscale=False, confidence=.9) is not None
     print(NotWinding)
     print(Winding)
 
 def windMB(duration):
-    Winding = pag.locateOnScreen(GreenMB2,grayscale=False, confidence=.5) is not None
-    NotWinding = pag.locateOnScreen(GreyMB,grayscale=False, confidence=.7) is not None
-    start = time.time()
-    pag.moveTo(268, 371)
-    pag.mouseDown(button='left')
-    print(NotWinding)
-    time.sleep(.1)
-    print(Winding)
-    while(time.time() - start < duration and Winding):
-        pag.mouseDown(button='left')
-    pag.mouseUp(button="left")
     
+    Winding = pag.locateOnScreen(GreenMB,grayscale=False, confidence=.6)
+    NotWinding = pag.locateOnScreen(GreyMB,grayscale=False, confidence=.9)
+    start = time.time()
+    loopStart = start
+    integral = 1
+    pag.moveTo(NotWinding)
+    pag.mouseDown(button='left')
+    while(time.time() - start < duration):
+        #While it is within the timeframe and winding
+        if(time.time() - loopStart >= integral):
+            #If the current time minus the start time is greater or equal to the defined interval length
+            if(Winding == None):
+                pag.mouseUp(button='left')
+                break
+            else:
+                loopStart = time.time()
+                print("Setting new looptime")
+        
 def godStrat():
     tog.toggleCam()
     time.sleep(.1)
@@ -93,6 +99,7 @@ while not keyboard.is_pressed('g'):
     if keyboard.is_pressed('l'):
         AC.leftVent()
     if keyboard.is_pressed('s'):
+        #pag.mouseDown(button='left')
         windMB(5)
     if keyboard.is_pressed('m'):
         tog.toggleMask()
