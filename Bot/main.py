@@ -45,25 +45,37 @@ def returnMB():
     print(Winding)
 
 def windMB(duration):
-    
-    Winding = pag.locateOnScreen(GreenMB,grayscale=False, confidence=.6)
+    Winding = pag.locateOnScreen(GreenMB,grayscale=False, confidence=.6) is not None
     NotWinding = pag.locateOnScreen(GreyMB,grayscale=False, confidence=.9)
     start = time.time()
     loopStart = start
     integral = 1
+    onScreen = False
     pag.moveTo(NotWinding)
     pag.mouseDown(button='left')
-    while(time.time() - start < duration):
-        #While it is within the timeframe and winding
-        if(time.time() - loopStart >= integral):
-            #If the current time minus the start time is greater or equal to the defined interval length
-            if(Winding == None):
-                pag.mouseUp(button='left')
-                break
-            else:
+    if(Winding):
+        #If the music box is winding
+        onScreen = True
+        #Green box on screen
+        while(onScreen):
+            #While it is on screen
+            if(time.time() - start < duration and time.time() - loopStart >= integral):
+                #checks if 
+                if(not Winding):
+                    time.sleep(.1)
+                    if(not Winding):
+                        onScreen = False
                 loopStart = time.time()
-                print("Setting new looptime")
-        
+                #resets loopStart value to new interval
+    pag.mouseUp(button='left')
+    if(time.time() - start < duration):
+        #Checks if the camera was pulled down premptively
+        time.sleep(.2)
+        tog.toggleMask()
+        AC.OfficeCheck()
+    else:
+        godStrat()
+
 def godStrat():
     tog.toggleCam()
     time.sleep(.1)
@@ -73,14 +85,12 @@ def autoPlay():
     timeout = 408
     start = time.time()
     pag.leftClick()
-    pag.center()
+    pag.moveTo(320, 240)
     time.sleep(30)
     mov.lookRight()
     tog.toggleCam() #Cam Ups
     goToCam11()
-    windMB(20)
-    godStrat() #Cam Down
-    pag.center()
+    windMB(20) #Cam Down
     while(time.time() - start > timeout):
        AC.rightVent()
        AC.hallWay()
@@ -89,7 +99,6 @@ def autoPlay():
        AC.rightVent()
        tog.toggleCam() #Cam up\
        windMB(3)
-       godStrat()
     
 while not keyboard.is_pressed('g'):
     if keyboard.is_pressed('c'):
